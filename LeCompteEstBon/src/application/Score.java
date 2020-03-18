@@ -7,9 +7,6 @@ import java.util.Date;
 
 public class Score implements Comparable<Score>,Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String sPseudo;
 	private int iValeur;
@@ -43,6 +40,7 @@ public class Score implements Comparable<Score>,Serializable{
 		}
 		return 0;
 	}
+	
 	public String conversionTemps() {
 		int secondes;
 		int minutes;

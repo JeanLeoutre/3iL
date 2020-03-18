@@ -1,4 +1,4 @@
-package application;
+package Modele;
 
 import java.io.BufferedWriter;
 import java.io.EOFException;

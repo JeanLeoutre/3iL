@@ -1,4 +1,4 @@
-package application;
+package Vue;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -11,6 +11,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			primaryStage.setTitle("Le compte est bon");
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

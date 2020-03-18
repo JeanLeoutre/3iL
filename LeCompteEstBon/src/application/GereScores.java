@@ -1,3 +1,5 @@
+package application;
+
 import java.io.BufferedWriter;
 import java.io.EOFException;
 import java.io.File;

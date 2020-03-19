@@ -1,7 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+   <top>
+      <SplitPane BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <items>
+            <AnchorPane>
+               <children>
+                  <Button fx:id="boutonJouer" layoutX="158.0" layoutY="1.0" mnemonicParsing="false" onAction="#boutonJouer" text="Jouer" />
+                  <Button layoutX="252.0" layoutY="1.0" mnemonicParsing="false" text="Score" />
+                  <Text layoutX="9.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo :" />
+                  <Text fx:id="heure" layoutX="373.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Heure" />
+                  <TextField fx:id="pseudo" layoutX="62.0" layoutY="2.0" prefHeight="25.0" prefWidth="73.0" />
+               </children>
+            </AnchorPane>
+         </items>
+         <padding>
+            <Insets bottom="15.0" top="15.0" />
+         </padding>
+      </SplitPane>
+   </top>
+   <center>
+      <SplitPane fx:id="coeurJeu" BorderPane.alignment="CENTER">
+         <items>
+            <AnchorPane>
+               <children>
+                  <HBox layoutX="104.0" layoutY="14.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="28.0" text="+">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="26.0" text="-">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="X">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" text="/">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="65.0" layoutY="51.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="9">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="25">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="4">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="3">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="2">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="40.0" text="100">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button layoutX="143.0" layoutY="114.0" mnemonicParsing="false" text="Annuler" />
+                  <Button layoutX="234.0" layoutY="114.0" mnemonicParsing="false" text="Valider" />
+                  <TextArea layoutX="20.0" layoutY="156.0" prefHeight="200.0" prefWidth="195.0" />
+                  <Button layoutX="76.0" layoutY="363.0" mnemonicParsing="false" text="Supprimer" />
+                  <Text layoutX="20.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calcul demandé" />
+                  <Text fx:id="nbATrouver" layoutX="259.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="264">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="240.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre à trouver" />
+                  <Button layoutX="251.0" layoutY="295.0" mnemonicParsing="false" text="Proposer" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </center>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <right>
+      <SplitPane fx:id="chrono" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+         <items>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chrono" wrappingWidth="43.24609375" />
+         </items>
+      </SplitPane>
+   </right>
 </BorderPane>

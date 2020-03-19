@@ -2,15 +2,97 @@ package Modele;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class Modele {
-	final static int TAILLEMAXPSEUDO=8;
-private List<Etape> listeEtape=new LinkedList<Etape>();
+	final static int MINIMUM=100;
+	final static int MAXIMUM=900;
+
+private List<Etape> listeEtape;
+private int valeurmax=listeEtape.size()-1;
 private GereScores g= new GereScores();
-private String[] sPseudo=new String[Modele.TAILLEMAXPSEUDO];
+private String sPseudo;
 private int iNombreCible;
 private int iDureeMax;
+private int iDuree;
 private ModeJeu mode_jeu;
+	
+
+
+public void nombreATire() {
+	Random r= new Random();
+	this.iNombreCible=r.nextInt(Modele.MAXIMUM - Modele.MINIMUM + 1) + Modele.MINIMUM;
+}
+public Modele() {
+	this.mode_jeu=ModeJeu.INITIALISER;
+	
+		nombreATire();
+		this.listeEtape=new LinkedList<Etape>();
+		this.listeEtape.add(new Etape());
+		g.charge();
+}	
+public void preparer(String pseudo) {
+	this.mode_jeu=ModeJeu.PREPARER;
+	this.sPseudo=pseudo;
+	this.iDuree=0;
+	nombreATire();
+	this.listeEtape.add(new Etape());
+}
+	
+public void jouer(int indexPlaque1,int indexPlaque2,String sOperation) {
+	this.mode_jeu=ModeJeu.JOUER;
+	this.listeEtape.add(new Etape(this.listeEtape.get(valeurmax).getlistePlaques(),indexPlaque1,indexPlaque2,sOperation));
+}
+public void annuler() {
+	if(this.mode_jeu==ModeJeu.JOUER) {
+	this.listeEtape.remove(valeurmax);
+	}
+}
+public void valider() {
+	if(this.mode_jeu==ModeJeu.JOUER) {
+	this.listeEtape.get(valeurmax).plaquesSuivante();
+	}
+}
+public void supprimer() {
+	this.listeEtape.remove(valeurmax);
+}
+public void proposer() {
+	int valeur=this.listeEtape.get(valeurmax).getResultat();
+	
+	this.g.ajouteScore(this.sPseudo, valeur,this.iDuree);
+}
+
+
+
+
+/** Set and Get **/
+
+public List<Etape> getListeEtape() {
+	return listeEtape;
+}
+public void setListeEtape(List<Etape> listeEtape) {
+	this.listeEtape = listeEtape;
+}
+public int getiNombreCible() {
+	return iNombreCible;
+}
+public void setiNombreCible(int iNombreCible) {
+	this.iNombreCible = iNombreCible;
+}
+public int getiDureeMax() {
+	return iDureeMax;
+}
+public void setiDureeMax(int iDureeMax) {
+	this.iDureeMax = iDureeMax;
+}
+public ModeJeu getMode_jeu() {
+	return mode_jeu;
+}
+public void setMode_jeu(ModeJeu mode_jeu) {
+	this.mode_jeu = mode_jeu;
+}
+
+
 
 
 }

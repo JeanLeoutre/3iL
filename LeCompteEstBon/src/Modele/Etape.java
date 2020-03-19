@@ -9,7 +9,7 @@ import java.util.Random;
 public class Etape {
 	final static int NBPLAQUES=6;
 	final static int NBOPERATION=4;
-	private List<Integer> iTabPlaques=new LinkedList<>();
+	private List<Integer> listePlaques=new LinkedList<>();
 	private int iIndexPremierePlaque;
 	private int iIndexSecondePlaque;
 	private String[] sTabOperations= {"-","+","*","/"};
@@ -17,6 +17,7 @@ public class Etape {
 	private boolean calculOK;
 	private int resultat;
 	private List<Integer> listNombreDispo =  new LinkedList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,25,50,75,100));
+	
 	public Etape() {
 		initialisation();
 	}
@@ -26,7 +27,7 @@ public class Etape {
 		this.iIndexSecondePlaque=iIndexPlaque2;
 		
 		for(int i=0;i<this.sTabOperations.length;i++) {
-			if(this.sTabOperations[i]==sOperation) {
+			if(this.sTabOperations[i].equals(sOperation)) {
 				this.idOp=i;
 			}
 		}
@@ -63,52 +64,84 @@ public class Etape {
 			this.calculOK=true;
 		}
 		}
-		
-		
+			
 	}
 	public boolean calculOK() {
 		return this.calculOK;
 	}
 	public String operationString() {
-		return new String(this.iTabPlaques.get(iIndexPremierePlaque)+" "+this.sTabOperations[this.idOp]+this.iTabPlaques.get(iIndexSecondePlaque)+" = "+this.resultat);
+		return new String(this.listePlaques.get(iIndexPremierePlaque)+" "+this.sTabOperations[this.idOp]+this.listePlaques.get(iIndexSecondePlaque)+" = "+this.resultat);
 	}
 	public void initialisation() {
 		Random r= new Random();
 		for(int i=0;i<Etape.NBPLAQUES;i++) {
 			int iNbAlea= r.nextInt(this.listNombreDispo.size());
 			if(!this.listNombreDispo.isEmpty()) {
-				System.out.println(this.listNombreDispo.get(iNbAlea));
-				this.iTabPlaques.add(this.listNombreDispo.get(iNbAlea));
+				this.listePlaques.add(this.listNombreDispo.get(iNbAlea));
 				this.listNombreDispo.remove(iNbAlea);
 			}
 		}
 	}
 	public List<Integer> plaquesSuivante() {
-		this.iTabPlaques.remove(iIndexPremierePlaque);
-		this.iTabPlaques.remove(iIndexSecondePlaque);
-		this.iTabPlaques.add(this.resultat);
-		return this.iTabPlaques;
+		this.listePlaques.remove(iIndexPremierePlaque);
+		this.listePlaques.remove(iIndexSecondePlaque);
+		this.listePlaques.add(this.resultat);
+		return this.listePlaques;
 	}
-	/**
-	public void choixPlaques() {
-		Scanner scan=new Scanner(System.in);
-		boolean bNotEnd=false;
-		
-		System.out.println("Veuillez choisir une première plaque parmis les suivantes");
-		affichePlaquesRestantes();
-		iIndexPremierePlaque= scan.nextInt();
-		int iPremierePlaque=this.iTabPlaques.get(iIndexPremierePlaque);
-		this.iTabPlaques.remove(iIndexPremierePlaque);
-		System.out.println("Veuillez choisir une seconde plaque parmis les suivantes");
-		affichePlaquesRestantes();
-		iIndexSecondePlaque= scan.nextInt();
-		int iSecondePlaque=this.iTabPlaques.get(iIndexSecondePlaque);
-		this.iTabPlaques.remove(iIndexSecondePlaque);	
-		
-	}**/
+	
 	public void affichePlaquesRestantes() {
-		for(int i : this.iTabPlaques) {
+		for(int i : this.listePlaques) {
 			System.out.print(i+" ");
 		}
 	}
+
+	public List<Integer> getlistePlaques() {
+		return listePlaques;
+	}
+
+	public void setlistePlaques(List<Integer> listePlaques) {
+		this.listePlaques = listePlaques;
+	}
+
+	public boolean isCalculOK() {
+		return calculOK;
+	}
+
+	public void setCalculOK(boolean calculOK) {
+		this.calculOK = calculOK;
+	}
+
+	public int getResultat() {
+		return resultat;
+	}
+
+	public void setResultat(int resultat) {
+		this.resultat = resultat;
+	}
+
+	public int getiIndexPremierePlaque() {
+		return iIndexPremierePlaque;
+	}
+
+	public void setiIndexPremierePlaque(int iIndexPremierePlaque) {
+		this.iIndexPremierePlaque = iIndexPremierePlaque;
+	}
+
+	public int getiIndexSecondePlaque() {
+		return iIndexSecondePlaque;
+	}
+
+	public void setiIndexSecondePlaque(int iIndexSecondePlaque) {
+		this.iIndexSecondePlaque = iIndexSecondePlaque;
+	}
+
+	public int getIdOp() {
+		return idOp;
+	}
+
+	public void setIdOp(int idOp) {
+		this.idOp = idOp;
+	}
+	
+	
 }

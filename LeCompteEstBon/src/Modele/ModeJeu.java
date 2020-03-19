@@ -1,7 +1,10 @@
 package Modele;
 
 public enum ModeJeu {
- DEMARRAGE;
-INITIALISER;
-	
+ SCORE,
+ ATTENDRE,
+ AFFICHERSCORE,
+ PREPARER,
+ JOUER,                                          
+ INITIALISER;
 }

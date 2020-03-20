@@ -12,7 +12,7 @@ public class Etape {
 	private List<Integer> listePlaques=new LinkedList<>();
 	private int iIndexPremierePlaque;
 	private int iIndexSecondePlaque;
-	private String[] sTabOperations= {"-","+","*","/"};
+	private String[] sTabOperations= {"+","-","X","/"};
 	private int idOp;
 	private boolean calculOK;
 	private int resultat;
@@ -25,7 +25,7 @@ public class Etape {
 	public Etape(List<Integer> oldTabPlaques,int iIndexPlaque1, int iIndexPlaque2,String sOperation) {
 		this.iIndexPremierePlaque=iIndexPlaque1;
 		this.iIndexSecondePlaque=iIndexPlaque2;
-		
+		this.listePlaques=oldTabPlaques;
 		for(int i=0;i<this.sTabOperations.length;i++) {
 			if(this.sTabOperations[i].equals(sOperation)) {
 				this.idOp=i;
@@ -39,7 +39,7 @@ public class Etape {
 		case "+":
 			this.resultat=oldTabPlaques.get(iIndexPlaque1)+oldTabPlaques.get(iIndexPlaque2);
 			break;
-		case "*":
+		case "X":
 			this.resultat=oldTabPlaques.get(iIndexPlaque1)*oldTabPlaques.get(iIndexPlaque2);
 			break;
 		case "/":
@@ -70,7 +70,7 @@ public class Etape {
 		return this.calculOK;
 	}
 	public String operationString() {
-		return new String(this.listePlaques.get(iIndexPremierePlaque)+" "+this.sTabOperations[this.idOp]+this.listePlaques.get(iIndexSecondePlaque)+" = "+this.resultat);
+		return new String(this.listePlaques.get(iIndexPremierePlaque)+" "+this.sTabOperations[this.idOp]+" "+this.listePlaques.get(iIndexSecondePlaque)+" = "+this.resultat);
 	}
 	public void initialisation() {
 		Random r= new Random();
@@ -83,9 +83,8 @@ public class Etape {
 		}
 	}
 	public List<Integer> plaquesSuivante() {
-		this.listePlaques.remove(iIndexPremierePlaque);
+		this.listePlaques.set(this.iIndexPremierePlaque,this.resultat);
 		this.listePlaques.remove(iIndexSecondePlaque);
-		this.listePlaques.add(this.resultat);
 		return this.listePlaques;
 	}
 	

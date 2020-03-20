@@ -9,7 +9,6 @@ public class Modele {
 	final static int MAXIMUM=900;
 
 private List<Etape> listeEtape;
-private int valeurmax=listeEtape.size()-1;
 private GereScores g= new GereScores();
 private String sPseudo;
 private int iNombreCible;
@@ -30,36 +29,39 @@ public Modele() {
 		this.listeEtape=new LinkedList<Etape>();
 		this.listeEtape.add(new Etape());
 		g.charge();
+
 }	
 public void preparer(String pseudo) {
 	this.mode_jeu=ModeJeu.PREPARER;
 	this.sPseudo=pseudo;
 	this.iDuree=0;
-	nombreATire();
-	this.listeEtape.add(new Etape());
 }
 	
 public void jouer(int indexPlaque1,int indexPlaque2,String sOperation) {
 	this.mode_jeu=ModeJeu.JOUER;
-	this.listeEtape.add(new Etape(this.listeEtape.get(valeurmax).getlistePlaques(),indexPlaque1,indexPlaque2,sOperation));
+	this.listeEtape.add(new Etape(this.listeEtape.get(listeEtape.size()-1).getlistePlaques(),indexPlaque1,indexPlaque2,sOperation));
 }
 public void annuler() {
 	if(this.mode_jeu==ModeJeu.JOUER) {
-	this.listeEtape.remove(valeurmax);
+	this.listeEtape.remove(listeEtape.size()-1);
 	}
 }
 public void valider() {
 	if(this.mode_jeu==ModeJeu.JOUER) {
-	this.listeEtape.get(valeurmax).plaquesSuivante();
+	this.listeEtape.get(listeEtape.size()-1).plaquesSuivante();
+
 	}
 }
 public void supprimer() {
-	this.listeEtape.remove(valeurmax);
+	if(listeEtape.size()-1!=0) {
+	this.listeEtape.remove(listeEtape.size()-1);
+	}
 }
 public void proposer() {
-	int valeur=this.listeEtape.get(valeurmax).getResultat();
-	
-	this.g.ajouteScore(this.sPseudo, valeur,this.iDuree);
+	this.mode_jeu=ModeJeu.SCORE;
+	int valeur=this.iNombreCible-this.listeEtape.get(listeEtape.size()-1).getlistePlaques().get(this.listeEtape.get(listeEtape.size()-1).getiIndexPremierePlaque());
+	this.g.ajouteScore(this.sPseudo, valeur,this.iDureeMax-this.iDuree);
+	this.g.enregistre();
 }
 
 

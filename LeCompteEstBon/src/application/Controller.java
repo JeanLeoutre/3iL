@@ -1,6 +1,7 @@
 package application;
 
 import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import Modele.Modele;
@@ -33,6 +34,7 @@ public class Controller {
     private Integer iIndex1;
     private Integer iIndex2;
     private String sOperation;
+    private List<String> lignes= new LinkedList<String>();
 	private Modele m=new Modele();
 	@FXML
 	HBox hboxPlaques;
@@ -102,6 +104,7 @@ public class Controller {
         setTimer();
       
 	}
+	@SuppressWarnings("unchecked")
 	@FXML
 	private void boutonAction(ActionEvent e) {
 		String sNomBtn=((Button) e.getSource()).getText();
@@ -109,20 +112,32 @@ public class Controller {
 		case "Annuler":
 			m.annuler();
 			cleanVariable();
+			this.textCalcul.setText("");
+			creationPlaques();
 			break;
 		case "Valider":
 			m.valider();
-			textOperation.appendText(this.textCalcul.getText()+"\n");
+			this.lignes.add(this.textCalcul.getText()+"\n");
+			this.textOperation.clear();
+			textOperation.appendText(this.lignes.toString());
 			this.textCalcul.setText("");
 			creationPlaques();
 			cleanVariable();
 			break;
+			// TODO
 		case "Proposer":
-			m.proposer();
+			
+			m.proposer(100);
 			break;
 		case "Supprimer":
 			m.supprimer();
+			cleanVariable();
 			creationPlaques();
+			this.textCalcul.setText("");
+			this.lignes.remove(this.lignes.size()-1);
+			this.textOperation.clear();
+			this.textOperation.appendText(this.lignes.toString());
+
 			break;
 		default:
 			break;
@@ -153,7 +168,7 @@ public class Controller {
                 }
                 if(iTempsMinutes == 0 && iTempsSecondes == 0) {
                     timeline.pause();
-                    m.proposer();
+                    m.proposer(0);
                     update();
                 }
                 textChrono.setText(String.format("%02d:%02d", iTempsMinutes, iTempsSecondes));

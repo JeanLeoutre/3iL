@@ -9,7 +9,7 @@ import java.util.Random;
 public class Etape {
 	final static int NBPLAQUES=6;
 	final static int NBOPERATION=4;
-	private List<Integer> listePlaques=new LinkedList<>();
+	private LinkedList<Integer> listePlaques=new LinkedList<>();
 	private int iIndexPremierePlaque;
 	private int iIndexSecondePlaque;
 	private String[] sTabOperations= {"+","-","X","/"};
@@ -22,10 +22,12 @@ public class Etape {
 		initialisation();
 	}
 	
-	public Etape(List<Integer> oldTabPlaques,int iIndexPlaque1, int iIndexPlaque2,String sOperation) {
+	public Etape(LinkedList<Integer> oldTabPlaques,int iIndexPlaque1, int iIndexPlaque2,String sOperation) {
+		
 		this.iIndexPremierePlaque=iIndexPlaque1;
 		this.iIndexSecondePlaque=iIndexPlaque2;
 		this.listePlaques=oldTabPlaques;
+		
 		for(int i=0;i<this.sTabOperations.length;i++) {
 			if(this.sTabOperations[i].equals(sOperation)) {
 				this.idOp=i;
@@ -94,11 +96,11 @@ public class Etape {
 		}
 	}
 
-	public List<Integer> getlistePlaques() {
+	public LinkedList<Integer> getlistePlaques() {
 		return listePlaques;
 	}
 
-	public void setlistePlaques(List<Integer> listePlaques) {
+	public void setlistePlaques(LinkedList<Integer> listePlaques) {
 		this.listePlaques = listePlaques;
 	}
 

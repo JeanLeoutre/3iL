@@ -45,7 +45,6 @@ public void jouer(int indexPlaque1,int indexPlaque2,String sOperation) {
 public void annuler() {
 	if(this.mode_jeu==ModeJeu.JOUER) {
 	this.listeEtape.remove(listeEtape.size()-1);
-	
 	}
 }
 public void valider() {
@@ -61,7 +60,7 @@ public void supprimer() {
 }
 public void proposer(int duree) {
 	this.mode_jeu=ModeJeu.SCORE;
-	int valeur=this.iNombreCible-this.listeEtape.get(listeEtape.size()-1).getlistePlaques().get(this.listeEtape.get(listeEtape.size()-1).getiIndexPremierePlaque());
+	int valeur=this.iNombreCible-this.listeEtape.get(listeEtape.size()-1).getResultat();
 	this.g.ajouteScore(this.sPseudo, valeur,this.iDureeMax-duree);
 	this.g.enregistre();
 }

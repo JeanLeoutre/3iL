@@ -53,8 +53,8 @@ public class Score implements Comparable<Score>,Serializable{
 		
 	
 	}
-	public void affiche() {
-		System.out.println(this.sPseudo.toUpperCase()+" = " +this.iValeur+" en "+conversionTemps()+" (le "+this.sDate+")");
+	public String affiche() {
+		return this.sPseudo.toUpperCase()+" = " +this.iValeur+" en "+conversionTemps()+" (le "+this.sDate+")";
 	}
 	public String getsPseudo() {
 		return sPseudo;

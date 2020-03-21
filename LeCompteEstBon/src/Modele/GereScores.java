@@ -129,4 +129,9 @@ public class GereScores{
 			}
 		}
 	}
+
+	public List<Score> getListeScore() {
+		return listeScore;
+	}
+	
 }

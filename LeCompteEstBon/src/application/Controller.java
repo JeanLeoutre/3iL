@@ -17,6 +17,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -25,8 +26,11 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Controller {
@@ -37,8 +41,9 @@ public class Controller {
     private Integer iIndex1;
     private Integer iIndex2;
     private String sOperation;
+    private int compteurTour=0;
     private List<String> lignes= new LinkedList<String>();
-	private Modele m=new Modele();
+	private Modele m;
 	@FXML
 	Button boutonScore;
 	@FXML
@@ -72,19 +77,18 @@ public class Controller {
 	@FXML
 	public void boutonJouer() {
 		
-		if(pseudo.getText().length()>3 || pseudo.getText().length()<8) {
+		if(pseudo.toString().length()>=3 || pseudo.toString().length()<=8) {
 		m.preparer(pseudo.getText());
 		coeurJeu.setDisable(false);
         chrono.setDisable(false);
-        startTimer();
-       
+        startTimer();    
         creationPlaques();
-       
 		}
 		else {
-			Alert bteDialog = new Alert(AlertType.INFORMATION);
-			bteDialog.setTitle("Information");
-			bteDialog.setHeaderText("Le pseudo n'est pas conforme");
+			Alert bteDialog = new Alert(AlertType.WARNING);
+			bteDialog.setTitle("WARNING");
+			bteDialog.setHeaderText(null);
+			bteDialog.setContentText("Le pseudo doit contenir entre 3 et 8 caractères.");
 			bteDialog.showAndWait();
 		}
 	}
@@ -101,6 +105,7 @@ public class Controller {
     }
 	@FXML
     private void initialize() {
+		this.m=new Modele();
         coeurJeu.setDisable(true);
         chrono.setDisable(true);
         nbATrouver.setText(Integer.toString(m.getiNombreCible()));
@@ -115,10 +120,20 @@ public class Controller {
 		String sNomBtn=((Button) e.getSource()).getText();
 		switch(sNomBtn) {
 		case "Annuler":
+			if(this.iIndex1!=null && this.iIndex2!=null && this.sOperation!=null) {
 			m.annuler();
 			cleanVariable();
 			this.textCalcul.setText("");
 			creationPlaques();
+			if(this.lignes.size()>1) {
+			this.lignes.remove(this.lignes.size()-1);
+			}
+			this.textOperation.clear();
+			this.textOperation.appendText(this.lignes.toString());
+			}else {
+				errorPopUp();
+			}
+			
 			break;
 		case "Valider":
 			this.m.valider();
@@ -127,16 +142,22 @@ public class Controller {
 			this.textOperation.clear();
 			textOperation.appendText(this.lignes.toString());
 			this.textCalcul.setText("");
-
+			compteurTour+=1;
+	    	 if(compteurTour==5) {
+	    		 m.proposer(iTempsMinutes*60+this.iTempsSecondes);
+	    		 finDeJeu();
+	    	 }
 			cleanVariable();
 			break;
-			// TODO
 		case "Proposer":
+			if(this.m.getListeEtape().size()!=1) {
 			int temps=iTempsMinutes*60+this.iTempsSecondes;
 			m.proposer(temps);
-			timeline.pause();
-			coeurJeu.setDisable(true);
-	        chrono.setDisable(true);
+			finDeJeu();
+			}
+			else {
+				errorPopUp();
+			}
 			break;
 		case "Supprimer":
 			m.supprimer();
@@ -146,6 +167,7 @@ public class Controller {
 			this.lignes.remove(this.lignes.size()-1);
 			this.textOperation.clear();
 			this.textOperation.appendText(this.lignes.toString());
+			this.compteurTour-=1;
 
 			break;
 		default:
@@ -153,9 +175,6 @@ public class Controller {
 		}
 	}
 	
-	public void update() {
-		
-	}
 	private void setTimer() {
         iTempsSecondes = 0;
         iTempsMinutes = 3;
@@ -177,9 +196,8 @@ public class Controller {
                 	textChrono.setTextFill(Color.RED);
                 }
                 if(iTempsMinutes == 0 && iTempsSecondes == 0) {
-                    timeline.pause();
+                	finDeJeu();
                     m.proposer(0);
-                    update();
                 }
                 textChrono.setText(String.format("%02d:%02d", iTempsMinutes, iTempsSecondes));
             }
@@ -192,6 +210,7 @@ public class Controller {
     public void creationPlaques() {
     	
     	 this.listPlaques=this.m.getListeEtape().get(this.m.getListeEtape().size()-1).getlistePlaques();
+    	 
     	if(!hboxPlaques.getChildren().isEmpty()) {
     		hboxPlaques.getChildren().clear();
     	}
@@ -238,5 +257,30 @@ public class Controller {
     	File htmlFile = new File("score.html");
     	Desktop.getDesktop().browse(htmlFile.toURI());
     	
+    }
+    public void finDeJeu() {
+    	timeline.pause();
+    	
+    	Alert bteDialog = new Alert(AlertType.INFORMATION);
+        bteDialog.setTitle("INFORMATION");
+        bteDialog.setHeaderText(null);
+        int resultat=this.m.getiNombreCible()-this.m.getListeEtape().get(this.m.getListeEtape().size()-1).getResultat();
+        if(resultat<0) {
+        	resultat=resultat*-1;
+        }
+        bteDialog.setContentText("Votre score est : "+resultat);
+        bteDialog.showAndWait();
+        initialize();
+        this.lignes.clear();
+        this.compteurTour=0;
+        this.textOperation.clear();
+        
+    }
+    public void errorPopUp() {
+    	Alert bteDialog = new Alert(AlertType.WARNING);
+		bteDialog.setTitle("WARNING");
+		bteDialog.setHeaderText(null);
+		bteDialog.setContentText("Vous devez faire un calcul pour réaliser cette action");
+		bteDialog.showAndWait();
     }
 }

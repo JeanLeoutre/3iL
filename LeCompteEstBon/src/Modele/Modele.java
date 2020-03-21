@@ -40,6 +40,7 @@ public void preparer(String pseudo) {
 public void jouer(int indexPlaque1,int indexPlaque2,String sOperation) {
 	this.mode_jeu=ModeJeu.JOUER;
 	this.listeEtape.add(new Etape(this.listeEtape.get(listeEtape.size()-1).getlistePlaques(),indexPlaque1,indexPlaque2,sOperation));
+	
 }
 public void annuler() {
 	if(this.mode_jeu==ModeJeu.JOUER) {

@@ -77,7 +77,7 @@ public class Controller {
 		coeurJeu.setDisable(false);
         chrono.setDisable(false);
         startTimer();
-        this.listPlaques=this.m.getListeEtape().get(this.m.getListeEtape().size()-1).getlistePlaques();
+       
         creationPlaques();
        
 		}
@@ -121,12 +121,13 @@ public class Controller {
 			creationPlaques();
 			break;
 		case "Valider":
-			m.valider();
+			this.m.valider();
+			creationPlaques();
 			this.lignes.add(this.textCalcul.getText()+"\n");
 			this.textOperation.clear();
 			textOperation.appendText(this.lignes.toString());
 			this.textCalcul.setText("");
-			creationPlaques();
+
 			cleanVariable();
 			break;
 			// TODO
@@ -189,6 +190,8 @@ public class Controller {
         timeline.play();
     }
     public void creationPlaques() {
+    	
+    	 this.listPlaques=this.m.getListeEtape().get(this.m.getListeEtape().size()-1).getlistePlaques();
     	if(!hboxPlaques.getChildren().isEmpty()) {
     		hboxPlaques.getChildren().clear();
     	}

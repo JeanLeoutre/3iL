@@ -26,7 +26,7 @@ public class Etape {
 		
 		this.iIndexPremierePlaque=iIndexPlaque1;
 		this.iIndexSecondePlaque=iIndexPlaque2;
-		this.listePlaques=oldTabPlaques;
+		this.listePlaques.addAll(oldTabPlaques);
 		
 		for(int i=0;i<this.sTabOperations.length;i++) {
 			if(this.sTabOperations[i].equals(sOperation)) {
@@ -84,10 +84,11 @@ public class Etape {
 			}
 		}
 	}
-	public List<Integer> plaquesSuivante() {
+	public LinkedList<Integer> plaquesSuivante() {
 		this.listePlaques.set(this.iIndexPremierePlaque,this.resultat);
 		this.listePlaques.remove(iIndexSecondePlaque);
 		return this.listePlaques;
+
 	}
 	
 	public void affichePlaquesRestantes() {
@@ -143,6 +144,7 @@ public class Etape {
 	public void setIdOp(int idOp) {
 		this.idOp = idOp;
 	}
+	
 	
 	
 }

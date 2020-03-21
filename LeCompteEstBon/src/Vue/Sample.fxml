@@ -22,7 +22,7 @@
             <AnchorPane>
                <children>
                   <Button fx:id="boutonJouer" layoutX="158.0" layoutY="1.0" mnemonicParsing="false" onAction="#boutonJouer" text="Jouer" />
-                  <Button layoutX="252.0" layoutY="1.0" mnemonicParsing="false" text="Score" />
+                  <Button fx:id="boutonScore" layoutX="252.0" layoutY="1.0" mnemonicParsing="false" onAction="#afficheScores" text="Score" />
                   <Text layoutX="9.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo :" />
                   <Text fx:id="heure" layoutX="373.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Heure" />
                   <TextField fx:id="pseudo" layoutX="62.0" layoutY="2.0" prefHeight="25.0" prefWidth="73.0" />

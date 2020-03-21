@@ -94,6 +94,9 @@ public ModeJeu getMode_jeu() {
 public void setMode_jeu(ModeJeu mode_jeu) {
 	this.mode_jeu = mode_jeu;
 }
+public GereScores getG() {
+	return g;
+}
 
 
 

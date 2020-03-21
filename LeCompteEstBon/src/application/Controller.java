@@ -1,5 +1,8 @@
 package application;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +39,8 @@ public class Controller {
     private String sOperation;
     private List<String> lignes= new LinkedList<String>();
 	private Modele m=new Modele();
+	@FXML
+	Button boutonScore;
 	@FXML
 	HBox hboxPlaques;
 	@FXML
@@ -126,8 +131,11 @@ public class Controller {
 			break;
 			// TODO
 		case "Proposer":
-			
-			m.proposer(100);
+			int temps=iTempsMinutes*60+this.iTempsSecondes;
+			m.proposer(temps);
+			timeline.pause();
+			coeurJeu.setDisable(true);
+	        chrono.setDisable(true);
 			break;
 		case "Supprimer":
 			m.supprimer();
@@ -155,6 +163,7 @@ public class Controller {
 
     private void startTimer() {
         timeline = new Timeline();
+       
         KeyFrame keyframe = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 if(iTempsSecondes <= 0) {
@@ -219,5 +228,12 @@ public class Controller {
 		this.iIndex1=null;
 		this.iIndex2=null;
 		this.sOperation=null;
+    }
+    @FXML
+    public void afficheScores() throws IOException {
+    	this.m.getG().export();
+    	File htmlFile = new File("score.html");
+    	Desktop.getDesktop().browse(htmlFile.toURI());
+    	
     }
 }
